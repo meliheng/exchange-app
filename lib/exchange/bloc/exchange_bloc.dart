@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:pgproject/model/exchange_model.dart';
+import 'package:pgproject/exchange/model/exchange_model.dart';
 
 part 'exchange_event.dart';
 part 'exchange_state.dart';

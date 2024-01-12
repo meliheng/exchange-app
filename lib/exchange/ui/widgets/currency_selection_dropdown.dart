@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pgproject/bloc/exchange_bloc.dart';
-import 'package:pgproject/model/exchange_model.dart';
-import 'package:pgproject/ui/widgets/dropdown_widget.dart';
-import 'package:pgproject/utility/exchange_style_constants.dart';
+import 'package:pgproject/exchange/bloc/exchange_bloc.dart';
+import 'package:pgproject/exchange/model/exchange_model.dart';
+import 'package:pgproject/exchange/ui/widgets/dropdown_widget.dart';
+import 'package:pgproject/exchange/utility/exchange_style_constants.dart';
 
 class CurrencySelectionDropdown extends StatelessWidget {
   final ExchangeBloc bloc;

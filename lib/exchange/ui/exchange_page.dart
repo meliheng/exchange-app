@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pgproject/bloc/exchange_bloc.dart';
-import 'package:pgproject/ui/widgets/currency_selection_dropdown.dart';
-import 'package:pgproject/ui/widgets/currency_value_input_area.dart';
-import 'package:pgproject/utility/exchange_style_constants.dart';
+import 'package:pgproject/exchange/bloc/exchange_bloc.dart';
+import 'package:pgproject/exchange/ui/widgets/currency_selection_dropdown.dart';
+import 'package:pgproject/exchange/ui/widgets/currency_value_input_area.dart';
+import 'package:pgproject/exchange/utility/exchange_style_constants.dart';
 
 class ExchangePage extends StatefulWidget {
   const ExchangePage({super.key});

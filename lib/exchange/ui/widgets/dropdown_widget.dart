@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pgproject/model/exchange_model.dart';
+import 'package:pgproject/exchange/model/exchange_model.dart';
 
 class DropdownWidget extends StatelessWidget {
   final Exchange value;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pgproject/bloc/exchange_bloc.dart';
 import 'package:pgproject/core/extension/string_extension.dart';
-import 'package:pgproject/utility/exchange_style_constants.dart';
+import 'package:pgproject/exchange/bloc/exchange_bloc.dart';
+import 'package:pgproject/exchange/utility/exchange_style_constants.dart';
 
 class CurrencyValueInputArea extends StatelessWidget {
   final ExchangeInitialState state;
