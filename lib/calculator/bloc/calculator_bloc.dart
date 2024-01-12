@@ -46,12 +46,19 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
         // If the pressed number is not a dot, add it to the current input
         _currentInput += event.number;
       }
-      if (_currentOperation != OperatorEnum.none) {
+      if (_currentOperation != OperatorEnum.none && _checkOperatorExists()) {
         _previous += _currentOperation.toUIString;
       }
       // Emit the updated calculator state with the current input
       emit(CalculatorResultState(result: _currentInput, previous: _previous));
     }
+  }
+
+  bool _checkOperatorExists() {
+    if (_previous.contains(_currentOperation.toUIString)) {
+      return false;
+    }
+    return true;
   }
 
   FutureOr<void> _operationPressed(
@@ -136,6 +143,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     _currentInput = '';
     _currentOperation = OperatorEnum.none;
     _result = '';
+    _previous = '';
 
     // Emit the updated calculator state with an empty result
     emit(CalculatorResultState(result: '', previous: ''));
