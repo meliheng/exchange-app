@@ -9,11 +9,11 @@ sealed class CalculatorActionState extends CalculatorState {}
 
 class CalculatorResultState extends CalculatorState {
   final String result;
-  final String previous;
+  final String previousInput;
 
   CalculatorResultState({
     required this.result,
-    required this.previous,
+    required this.previousInput,
   });
 }
 

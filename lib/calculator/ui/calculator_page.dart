@@ -31,7 +31,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
         ),
         centerTitle: true,
       ),
-      backgroundColor: ProjectUtilityColors.darkGrey,
+      backgroundColor: ProjectUtilityColors.grey,
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -47,7 +47,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        state.previous,
+                        state.previousInput,
                         style: ProjectTextStyles.appbarTextStyle,
                       ),
                       ResultArea(result: state.result),
@@ -60,10 +60,11 @@ class _CalculatorPageState extends State<CalculatorPage> {
             ),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CalculatorButton(
                     text: _sil,
+                    width: 150,
                     onPressed: () {
                       _bloc.add(CalculatorDeletePressedEvent());
                     }),
@@ -83,8 +84,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     }),
               ],
             ),
+            const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CalculatorButton(
                     text: NumberEnum.seven.index.toString(),
@@ -115,8 +117,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     }),
               ],
             ),
+            const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CalculatorButton(
                     text: NumberEnum.four.index.toString(),
@@ -147,8 +150,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     }),
               ],
             ),
+            const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CalculatorButton(
                     text: NumberEnum.one.index.toString(),
@@ -179,10 +183,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     }),
               ],
             ),
+            const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CalculatorButton(
+                    width: 150,
                     text: NumberEnum.zero.index.toString(),
                     onPressed: () {
                       _bloc.add(CalculatorNumberPressedEvent(

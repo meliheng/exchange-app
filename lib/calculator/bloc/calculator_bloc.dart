@@ -7,7 +7,8 @@ part 'calculator_event.dart';
 part 'calculator_state.dart';
 
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
-  CalculatorBloc() : super(CalculatorResultState(previous: '', result: '')) {
+  CalculatorBloc()
+      : super(CalculatorResultState(previousInput: '', result: '')) {
     on<CalculatorNumberPressedEvent>(_numberPressed);
     on<CalculatorOperationPressedEvent>(_operationPressed);
     on<CalculatorEqualPressedEvent>(_equalPressed);
@@ -18,14 +19,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   String _currentInput = '';
   OperatorEnum _currentOperation = OperatorEnum.none;
   String _result = '';
-  String _previous = '';
-
-  bool canAddedDot() {
-    if (_currentInput.contains('.')) {
-      return false;
-    }
-    return true;
-  }
+  String _previousInput = '';
 
   FutureOr<void> _numberPressed(
     CalculatorNumberPressedEvent event,
@@ -47,18 +41,12 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
         _currentInput += event.number;
       }
       if (_currentOperation != OperatorEnum.none && _checkOperatorExists()) {
-        _previous += _currentOperation.toUIString;
+        _previousInput += _currentOperation.toUIString;
       }
       // Emit the updated calculator state with the current input
-      emit(CalculatorResultState(result: _currentInput, previous: _previous));
+      emit(CalculatorResultState(
+          result: _currentInput, previousInput: _previousInput));
     }
-  }
-
-  bool _checkOperatorExists() {
-    if (_previous.contains(_currentOperation.toUIString)) {
-      return false;
-    }
-    return true;
   }
 
   FutureOr<void> _operationPressed(
@@ -75,7 +63,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       // Set the current operation to the pressed operation
       _currentOperation = event.operation;
       _result = _currentInput; // Save the current input as the result
-      _previous = _currentInput;
+      _previousInput = _currentInput;
       _currentInput = ''; // Reset the current input for the next number input
     }
 
@@ -83,9 +71,58 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     emit(
       CalculatorResultState(
         result: _currentOperation.toUIString,
-        previous: _result,
+        previousInput: _result,
       ),
     );
+  }
+
+  FutureOr<void> _equalPressed(
+    CalculatorEqualPressedEvent event,
+    Emitter<CalculatorState> emit,
+  ) {
+    // Check if there is any current input and there is a previous operation
+    if (_currentInput.isNotEmpty && _currentOperation != OperatorEnum.none) {
+      _calculateResult(); // Calculate the result based on the current operation
+      _currentOperation = OperatorEnum.none; // Reset the current operation
+      _currentInput = _result; // Update the current input with the result
+    }
+
+    // Emit the updated calculator state with the result or '0' if result is empty
+    emit(CalculatorResultState(
+        result: _result.isEmpty ? '0' : _result, previousInput: ''));
+  }
+
+  FutureOr<void> _clearPressed(
+    CalculatorClearPressedEvent event,
+    Emitter<CalculatorState> emit,
+  ) {
+    // Clear all calculator states: current input, current operation, and result
+    _currentInput = '';
+    _currentOperation = OperatorEnum.none;
+    _result = '';
+    _previousInput = '';
+
+    // Emit the updated calculator state with an empty result
+    emit(CalculatorResultState(result: '', previousInput: ''));
+  }
+
+  FutureOr<void> _deletePressed(
+    CalculatorDeletePressedEvent event,
+    Emitter<CalculatorState> emit,
+  ) {
+    // Check if there is any current input
+    if (_currentInput.isNotEmpty) {
+      // Remove the last character from the current input
+      _currentInput = _currentInput.substring(0, _currentInput.length - 1);
+
+      // Emit the updated calculator state with the modified current input
+      emit(CalculatorResultState(result: _currentInput, previousInput: ''));
+    }
+  }
+
+  FutureOr<void> _backButtonPressed(
+      CalculatorBackButtonPressedEvent event, Emitter<CalculatorState> emit) {
+    emit(CalculatorBackButtonPressedActionState());
   }
 
   void _calculateResult() {
@@ -119,52 +156,17 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     }
   }
 
-  FutureOr<void> _equalPressed(
-    CalculatorEqualPressedEvent event,
-    Emitter<CalculatorState> emit,
-  ) {
-    // Check if there is any current input and there is a previous operation
-    if (_currentInput.isNotEmpty && _currentOperation != OperatorEnum.none) {
-      _calculateResult(); // Calculate the result based on the current operation
-      _currentOperation = OperatorEnum.none; // Reset the current operation
-      _currentInput = _result; // Update the current input with the result
+  bool canAddedDot() {
+    if (_currentInput.contains('.')) {
+      return false;
     }
-
-    // Emit the updated calculator state with the result or '0' if result is empty
-    emit(CalculatorResultState(
-        result: _result.isEmpty ? '0' : _result, previous: ''));
+    return true;
   }
 
-  FutureOr<void> _clearPressed(
-    CalculatorClearPressedEvent event,
-    Emitter<CalculatorState> emit,
-  ) {
-    // Clear all calculator states: current input, current operation, and result
-    _currentInput = '';
-    _currentOperation = OperatorEnum.none;
-    _result = '';
-    _previous = '';
-
-    // Emit the updated calculator state with an empty result
-    emit(CalculatorResultState(result: '', previous: ''));
-  }
-
-  FutureOr<void> _deletePressed(
-    CalculatorDeletePressedEvent event,
-    Emitter<CalculatorState> emit,
-  ) {
-    // Check if there is any current input
-    if (_currentInput.isNotEmpty) {
-      // Remove the last character from the current input
-      _currentInput = _currentInput.substring(0, _currentInput.length - 1);
-
-      // Emit the updated calculator state with the modified current input
-      emit(CalculatorResultState(result: _currentInput, previous: ''));
+  bool _checkOperatorExists() {
+    if (_previousInput.contains(_currentOperation.toUIString)) {
+      return false;
     }
-  }
-
-  FutureOr<void> _backButtonPressed(
-      CalculatorBackButtonPressedEvent event, Emitter<CalculatorState> emit) {
-    emit(CalculatorBackButtonPressedActionState());
+    return true;
   }
 }

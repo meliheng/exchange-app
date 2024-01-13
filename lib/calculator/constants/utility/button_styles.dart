@@ -16,6 +16,13 @@ class ProjectButtonStyles {
       borderRadius: BorderRadius.circular(10),
     ),
   );
+  ButtonStyle activeButtonStyleR5 = ElevatedButton.styleFrom(
+    foregroundColor: ProjectMainColors.white,
+    backgroundColor: ProjectMainColors.amber,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+  );
   ButtonStyle menuButtonStyle = ElevatedButton.styleFrom(
     foregroundColor: ProjectMainColors.white,
     backgroundColor: ProjectMainColors.amber,

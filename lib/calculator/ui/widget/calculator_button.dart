@@ -4,21 +4,22 @@ import 'package:pgproject/calculator/constants/utility/text_styles.dart';
 
 class CalculatorButton extends StatelessWidget {
   final String text;
-  final int flex;
+  final double width;
   final void Function()? onPressed;
   const CalculatorButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.flex = 1,
+    this.width = 70,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: flex,
+    return SizedBox(
+      height: 70,
+      width: width,
       child: ElevatedButton(
-        style: ProjectButtonStyles().activeButtonStyle,
+        style: ProjectButtonStyles().activeButtonStyleR5,
         onPressed: onPressed,
         child: Text(
           text,
